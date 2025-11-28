@@ -180,7 +180,7 @@ Huge thanks to [@Dxsk](https://github.com/Dxsk) for the contribution to v2.1.0
 
 ## Contributing
 
-Got ideas for improvements? Found a bug? Pull requests and issues are welcome! If it's better wordlists, new features, or bug fixes - all contributions help.
+Got ideas for improvements? Found a bug? If it's better wordlists, new features, or bug fixes - all contributions help.
 
 ## Important Legal Stuff
 
