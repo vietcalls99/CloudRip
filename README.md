@@ -1,5 +1,21 @@
 # CloudRip
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Version](https://img.shields.io/badge/version-2.1.0-green.svg)](https://github.com/moscovium-mc/CloudRip/releases)
+[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey.svg)]()
+[![Tool Type](https://img.shields.io/badge/tool-recon-red.svg)]()
+[![Built for](https://img.shields.io/badge/built%20for-pentesting-red.svg)]()
+
+[![GitHub Stars](https://img.shields.io/github/stars/moscovium-mc/CloudRip?style=social)](https://github.com/moscovium-mc/CloudRip/stargazers)
+[![Forks](https://img.shields.io/github/forks/moscovium-mc/CloudRip?style=social)](https://github.com/moscovium-mc/CloudRip/network/members)
+[![Contributors](https://img.shields.io/badge/contributors-2-blue.svg)](https://github.com/moscovium-mc/CloudRip/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/moscovium-mc/CloudRip)](https://github.com/moscovium-mc/CloudRip/issues)
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/moscovium-mc/CloudRip/graphs/commit-activity)
+[![Last Commit](https://img.shields.io/github/last-commit/moscovium-mc/CloudRip)](https://github.com/moscovium-mc/CloudRip/commits/main)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 A tool that helps you find the real IP addresses hiding behind Cloudflare by checking subdomains. For penetration testing, security research, and learning how Cloudflare protection works.
 
 ## What it does
@@ -176,7 +192,7 @@ www.example.com,104.16.1.1;172.67.1.1,104.16.1.1;172.67.1.1,2606:4700::1,2606:47
 
 ## Contributors
 
-Huge thanks to [@Dxsk](https://github.com/Dxsk) for the contribution to v2.1.0
+Huge thanks to [@Dxsk](https://github.com/Dxsk) for the contributions to v2.1.0
 
 ## Contributing
 
