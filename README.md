@@ -1,202 +1,200 @@
-# CloudRip
+# Blitz
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Version](https://img.shields.io/badge/version-2.1.0-green.svg)](https://github.com/moscovium-mc/CloudRip/releases)
+[![Go Version](https://img.shields.io/badge/go-1.21+-00ADD8.svg)](https://go.dev/)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/moscovium-mc/blitz/releases)
 [![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey.svg)]()
-[![Tool Type](https://img.shields.io/badge/tool-recon-red.svg)]()
+[![Tool Type](https://img.shields.io/badge/tool-bruteforce-red.svg)]()
 [![Built for](https://img.shields.io/badge/built%20for-pentesting-red.svg)]()
 
-[![GitHub Stars](https://img.shields.io/github/stars/moscovium-mc/CloudRip?style=social)](https://github.com/moscovium-mc/CloudRip/stargazers)
-[![Forks](https://img.shields.io/github/forks/moscovium-mc/CloudRip?style=social)](https://github.com/moscovium-mc/CloudRip/network/members)
-[![Contributors](https://img.shields.io/badge/contributors-2-blue.svg)](https://github.com/moscovium-mc/CloudRip/graphs/contributors)
-[![Issues](https://img.shields.io/github/issues/moscovium-mc/CloudRip)](https://github.com/moscovium-mc/CloudRip/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/moscovium-mc/blitz?style=social)](https://github.com/moscovium-mc/blitz/stargazers)
+[![Forks](https://img.shields.io/github/forks/moscovium-mc/blitz?style=social)](https://github.com/moscovium-mc/blitz/network/members)
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/moscovium-mc/CloudRip/graphs/commit-activity)
-[![Last Commit](https://img.shields.io/github/last-commit/moscovium-mc/CloudRip)](https://github.com/moscovium-mc/CloudRip/commits/main)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-A tool that helps you find the real IP addresses hiding behind Cloudflare by checking subdomains. For penetration testing, security research, and learning how Cloudflare protection works.
+A modern, lightning-fast login page bruteforcer written in Go. Blitz is built for speed and efficiency, leveraging Go's concurrent processing to deliver results 10x faster than traditional Python-based tools.
 
 ## What it does
 
-- **IPv4 & IPv6 support** - Resolves both A and AAAA records
-- **Multiple IPs detection** - Finds ALL IPs behind a domain, not just the first one
-- **Progress bar** - Real-time progress with live stats (found/cloudflare count)
-- **Dynamic Cloudflare IP detection** - Fetches latest IP ranges from Cloudflare's API (with fallback)
-- **Fast subdomain scanning** - Uses multiple threads to speed things up
-- **Multiple wordlists** - Combine several wordlists in a single scan
-- **Wordlist comments** - Use `#` to add comments in your wordlists
-- **Multiple output formats** - Export to JSON, YAML, CSV, or plain text
-- **Verbose & quiet modes** - Control output verbosity
-- **Filters out Cloudflare IPs** - Only shows you the real server addresses
-- **Bring your own wordlist** - Or use the built-in one (dom.txt)
-- **Save your findings** - Export results to a file for later
-- **Rate limiting** - Won't spam the target and get you blocked
-- **Solid default wordlist** - Organized and comprehensive for better results
+- **Blazing fast concurrent processing** - 10x faster than Python equivalents
+- **Smart form and field detection** - Automatically identifies login forms and input fields
+- **CSRF and Clickjacking scanner** - Built-in security analysis
+- **Cloudflare and WAF detector** - Identifies protection mechanisms
+- **SQL injection bypass detection** - Tests for login bypass vulnerabilities
+- **Multi-threaded worker pool** - Configurable 5-20 threads
+- **Intelligent success detection** - Smart analysis of login responses
+- **Rate limiting protection** - Prevents getting blocked during testing
+- **Cross-platform** - Windows, Linux, macOS support
 
-## Getting it running
+## Roadmap
 
-You'll need Python 3. Create a virtual environment and install dependencies:
+- [ ] Browser automation for JavaScript-heavy sites
+- [ ] Proxy support for distributed testing
+- [ ] Custom success detection patterns
+- [ ] Session management
+- [ ] Report generation
 
+## Requirements
+
+- Go 1.21 or higher
+
+## Installation
+
+Clone the repository:
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+git clone https://github.com/moscovium-mc/blitz
+cd blitz
+```
+
+### Windows
+
+**Option 1: Using build.bat**
+```powershell
+# Simply double-click build.bat
+```
+
+**Option 2: Manual build**
+```powershell
+go mod tidy
+go build -o blitz.exe .
+```
+
+### Linux/macOS
+
+**Option 1: Using setup.sh**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+**Option 2: Manual build**
+```bash
+go mod tidy
+go build -o blitz .
 ```
 
 ## How to use it
 
 Basic scan:
 ```bash
-python3 cloudrip.py example.com
+./blitz -url http://example.com/login
 ```
 
 With all the options:
 ```bash
-python3 cloudrip.py example.com -w wordlist1.txt -w wordlist2.txt -t 20 -o report.json -f json
+./blitz -url http://example.com/login -threads 10 -usernames users.txt -passwords pass.txt -verbose
 ```
 
 **Options:**
 
 | Option | Description |
 |--------|-------------|
-| `<domain>` | The site you're testing (like example.com) |
-| `-w, --wordlist` | Wordlist file(s). Can be specified multiple times (default: dom.txt) |
-| `-t, --threads` | How many threads to run (default: 10) |
-| `-o, --output` | Save results to a file |
-| `-f, --format` | Output format: `normal`, `json`, `yaml`, `csv` (default: normal) |
-| `-v, --verbose` | Show all results including "not found" entries |
-| `-q, --quiet` | Minimal output - only show found IPs |
+| `-url` | Target login page URL (required) |
+| `-threads` | Number of concurrent threads (default: 5, max: 20) |
+| `-rate` | Rate limit in seconds between requests (default: 1) |
+| `-usernames` | Custom username wordlist file |
+| `-passwords` | Custom password wordlist file |
+| `-verbose` | Show detailed output during scan |
 
 ## Examples
 
-**Basic scan:**
+**Basic scan with default settings:**
 ```bash
-python3 cloudrip.py example.com
+./blitz -url http://example.com/login
 ```
 
-**Multiple wordlists with JSON output:**
+**Fast mode (10 threads):**
 ```bash
-python3 cloudrip.py example.com -w subs1.txt -w subs2.txt -o report.json -f json
+./blitz -url http://target.com/login -threads 10
 ```
 
-**Fast scan with 50 threads:**
+**Stealth mode (slow and careful):**
 ```bash
-python3 cloudrip.py example.com -t 50 -o results.csv -f csv
+./blitz -url http://target.com/login -threads 2 -rate 5
 ```
 
-**Verbose mode (see all attempts):**
+**Custom wordlists:**
 ```bash
-python3 cloudrip.py example.com -v
+./blitz -url http://target.com/login -usernames users.txt -passwords pass.txt
 ```
 
-**Quiet mode (only found IPs):**
+**Verbose output for detailed analysis:**
 ```bash
-python3 cloudrip.py example.com -q -o found.txt
+./blitz -url http://target.com/login -verbose
 ```
 
-## Output Formats
-
-### Normal (default)
-```
-CloudRip Scan Report
-============================================================
-Target: example.com
-Date: 2025-11-28T12:00:00+00:00
-Total checked: 150
-
-[FOUND] Non-Cloudflare IPs (3):
-  mail.example.com
-    v4:[192.168.1.1, 192.168.1.2, 192.168.1.3]
-  ftp.example.com
-    v4:[10.0.0.1] | v6:[2001:db8::1]
-
-[CLOUDFLARE] Behind Cloudflare (5):
-  www.example.com
-    v4:[104.16.1.1 [CF], 172.67.1.1 [CF]] | v6:[2606:4700::1 [CF]]
+**Maximum speed (use with caution):**
+```bash
+./blitz -url http://target.com/login -threads 20 -rate 0
 ```
 
-### JSON
-```json
-{
-  "target_domain": "example.com",
-  "scan_date": "2025-11-28T12:00:00+00:00",
-  "total_checked": 150,
-  "summary": {
-    "found": 3,
-    "cloudflare": 5,
-    "not_found": 142,
-    "errors": 0
-  },
-  "results": { ... }
-}
-```
+## Features Breakdown
 
-### CSV
-```csv
-domain,ipv4,ipv4_cloudflare,ipv6,ipv6_cloudflare,status,error
-mail.example.com,192.168.1.1;192.168.1.2;192.168.1.3,,,,found,
-www.example.com,104.16.1.1;172.67.1.1,104.16.1.1;172.67.1.1,2606:4700::1,2606:4700::1,cloudflare,
-```
+### Smart Form Detection
+Blitz automatically analyzes the target page to identify:
+- Login forms and input fields
+- Hidden fields (CSRF tokens, session IDs)
+- Form submission methods (POST/GET)
+- Required vs optional fields
+
+### Security Analysis
+Built-in security scanner checks for:
+- CSRF token implementation
+- Clickjacking protection headers
+- Cloudflare and WAF presence
+- Common SQL injection vulnerabilities
+
+### Performance
+- Written in Go for maximum performance
+- Concurrent request processing
+- Efficient memory usage
+- Smart rate limiting to avoid detection
 
 ## Version History
 
-### v2.1.0 (Current)
+### v1.0.0 (Current)
 
-**New Features:**
-- Full IPv6 support (AAAA record resolution)
-- Multiple IPs detection - Resolves ALL IPs behind a domain (A/AAAA records can return multiple IPs)
-- Real-time progress bar with live stats
-- Dynamic Cloudflare IP range fetching from official API
-- Multiple output formats: JSON, YAML, CSV, normal text
-- Multiple wordlists support (combine with `-w file1.txt -w file2.txt`)
-- Verbose mode (`-v`) to see all results including not found
-- Quiet mode (`-q`) for minimal output
-- Automatic root domain checking before subdomain scan
-- Comprehensive scan summary with statistics
-- Structured report with categorized results (found, cloudflare, not_found, errors)
-- Wordlist comment support (lines starting with `#`)
+**Core Features:**
+- Multi-threaded login bruteforcing
+- Smart form and field detection
+- CSRF and Clickjacking scanner
+- Cloudflare and WAF detection
+- SQL injection bypass testing
+- Rate limiting protection
+- Cross-platform support
 
-**Technical Improvements:**
-- Complete rewrite with object-oriented architecture
-- Type hints throughout the codebase
-- Dataclasses for structured data handling
-- Better error handling (LifetimeTimeout, EOFError)
-- Cleaner executor shutdown on interrupt
-- Reduced rate limiting delay (0.1s → 0.05s)
-
-### v2.0.0
-
-**Wordlist Improvements:**
-- Massive wordlist upgrade - Took dom.txt from 100 to 600+ subdomains
-- Added API variants, cloud infrastructure, IoT endpoints
-- Covers auth/security, payment gateways, analytics, CI/CD pipelines
-- Way better geo coverage - cities and more countries
-- Handles modern cloud-native and microservices setups
-- Better database and service discovery hits
-
-### v1.5.0
-- Rate limiting so you don't get blocked
-- Thread handling works better now
-- Doesn't crash on DNS failures anymore
-- Prettier output with colors
-
-### v1.0.0
-- First drop with the core stuff
-- Multi-threaded subdomain scanning
-- Filters out Cloudflare IPs
-- Bring your own wordlist
-- Save results to file
-- Basic dom.txt with ~100 entries
-
-## Contributors
-
-Huge thanks to [@Dxsk](https://github.com/Dxsk) for the contributions to v2.1.0
+**Technical:**
+- Go 1.21+ support
+- Configurable worker pool (5-20 threads)
+- Intelligent success detection
+- Built-in wordlists
 
 ## Contributing
 
-Got ideas for improvements? Found a bug? If it's better wordlists, new features, or bug fixes - all contributions help.
+Contributions are welcome! Here's how you can help:
+
+### Reporting Bugs
+
+If you find a bug, please open an issue with:
+- Your operating system and version
+- Go version (`go version`)
+- Steps to reproduce the bug
+- Expected vs actual behavior
+- Any error messages
+
+### Pull Requests
+
+Want to contribute code?
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a pull request
+
+**Guidelines:**
+- Follow Go best practices and conventions
+- Add tests for new features
+- Update documentation as needed
+- Keep commits focused and descriptive
 
 ## Support
 
@@ -210,10 +208,34 @@ If you find this project useful, consider supporting my work:
 - <a href="solana:HYZjfEx8NbEMJX1vL1GmGj39zA6TgMsHm5KCHWSZxF4j"><img src="https://img.shields.io/badge/Solana-9945FF?style=plastic&logo=solana&logoColor=white" alt="Solana"></a> `HYZjfEx8NbEMJX1vL1GmGj39zA6TgMsHm5KCHWSZxF4j`
 - <a href="monero:86zv6vTDuG35sdBzBpwVAsD71hbt2gjH14qiesyrSsMkUAWHQkPZyY9TreeQ5dXRuP57yitP4Yn13SQEcMK4MhtwFzPoRR1"><img src="https://img.shields.io/badge/Monero-FF6600?style=plastic&logo=monero&logoColor=white" alt="Monero"></a> `86zv6vTDuG35sdBzBpwVAsD71hbt2gjH14qiesyrSsMkUAWHQkPZyY9TreeQ5dXRuP57yitP4Yn13SQEcMK4MhtwFzPoRR1`
 
-## Important Legal Stuff
+## Important Legal Notice
 
-**Only use CloudRip on systems you have permission to test.** This tool is for ethical security research, penetration testing with authorization, and educational purposes. Using it against websites without permission is illegal and not cool. You're responsible for how you use this tool.
+> [!WARNING]
+> **FOR AUTHORIZED SECURITY TESTING ONLY**
+
+**Only use Blitz on systems you have explicit permission to test.** This tool is designed for ethical security research, authorized penetration testing, and educational purposes only.
+
+**Unauthorized access to computer systems is illegal** and may result in criminal prosecution under various laws including:
+- Computer Fraud and Abuse Act (CFAA) in the United States
+- Computer Misuse Act in the United Kingdom
+- Similar legislation in other jurisdictions
+
+**You are solely responsible for how you use this tool.** The author assumes NO LIABILITY for any misuse, damage, or illegal activity conducted with Blitz.
+
+**Ethical Use Required:**
+- Obtain written authorization before testing
+- Respect rate limits and system resources
+- Follow responsible disclosure practices
+- Comply with all applicable laws and regulations
 
 ## License
 
-MIT License - use responsibly.
+MIT License - See [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+**[Star this repo](https://github.com/moscovium-mc/blitz)** if you find it useful
+
+</div>
